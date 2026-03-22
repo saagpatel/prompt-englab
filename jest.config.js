@@ -19,7 +19,7 @@ const customJestConfig = {
     "src/lib/encryption.ts",
     "src/lib/templateUtils.ts",
     "src/lib/middleware/**/*.ts",
-    "src/proxy.ts",
+    "src/middleware.ts",
   ],
   coverageThreshold: {
     global: {

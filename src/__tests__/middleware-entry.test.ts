@@ -3,7 +3,7 @@
  */
 
 import { NextRequest } from "next/server";
-import { proxy } from "@/proxy";
+import { middleware } from "@/middleware";
 import { securityHeaders } from "@/lib/middleware/security";
 
 function makeRequest(headers?: Record<string, string>) {
@@ -15,7 +15,7 @@ function makeRequest(headers?: Record<string, string>) {
 describe("app middleware entry", () => {
   it("applies security headers and request id", () => {
     const req = makeRequest({ "x-request-id": "existing-id" });
-    const response = proxy(req);
+    const response = middleware(req);
 
     Object.entries(securityHeaders).forEach(([key, value]) => {
       expect(response.headers.get(key)).toBe(value);
@@ -25,7 +25,7 @@ describe("app middleware entry", () => {
 
   it("sets csrf cookie when missing", () => {
     const req = makeRequest();
-    const response = proxy(req);
+    const response = middleware(req);
     const csrfCookie = response.cookies.get("csrf-token");
 
     expect(csrfCookie).toBeDefined();
