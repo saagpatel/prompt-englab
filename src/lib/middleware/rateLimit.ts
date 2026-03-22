@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from "next/server";
+import { createErrorResponse } from "@/lib/middleware/errorHandler";
 
 interface RateLimitEntry {
   count: number;
@@ -10,19 +11,20 @@ interface RateLimitEntry {
 const store = new Map<string, RateLimitEntry>();
 
 export interface RateLimitConfig {
-  windowMs: number;      // time window in ms
-  maxRequests: number;   // max requests per window
+  windowMs: number; // time window in ms
+  maxRequests: number; // max requests per window
 }
 
 export function getRateLimitKey(req: NextRequest): string {
   // Use IP address or auth token
-  const forwarded = req.headers.get('x-forwarded-for');
-  return forwarded ? forwarded.split(',')[0].trim() : 'unknown';
+  const forwarded = req.headers.get("x-forwarded-for");
+  const firstForwarded = forwarded?.split(",")[0]?.trim();
+  return firstForwarded || "unknown";
 }
 
 export function checkRateLimit(
   key: string,
-  config: RateLimitConfig
+  config: RateLimitConfig,
 ): { allowed: boolean; resetAt: number } {
   const now = Date.now();
   const entry = store.get(key);
@@ -41,23 +43,24 @@ export function checkRateLimit(
   return { allowed: false, resetAt: entry.resetAt };
 }
 
-export function withRateLimit(
+export function withRateLimit<TContext = unknown>(
   config: RateLimitConfig,
-  handler: (req: NextRequest, context?: any) => Promise<Response>
+  handler: (req: NextRequest, context: TContext) => Promise<Response>,
 ) {
-  return async (req: NextRequest, context?: any) => {
+  return async (req: NextRequest, context: TContext) => {
     const key = getRateLimitKey(req);
     const { allowed, resetAt } = checkRateLimit(key, config);
 
     if (!allowed) {
-      return NextResponse.json(
-        {
-          code: 'RATE_LIMIT_EXCEEDED',
-          message: 'Too many requests',
-          resetAt: new Date(resetAt).toISOString(),
-        },
-        { status: 429, headers: { 'Retry-After': String(Math.ceil((resetAt - Date.now()) / 1000)) } }
+      const retryAfter = String(Math.ceil((resetAt - Date.now()) / 1000));
+      const response = createErrorResponse(
+        "RATE_LIMIT_EXCEEDED",
+        "Too many requests",
+        429,
+        { resetAt: new Date(resetAt).toISOString() },
       );
+      response.headers.set("Retry-After", retryAfter);
+      return response;
     }
 
     return await handler(req, context);
