@@ -5,11 +5,13 @@ import { securityHeaders } from '@/lib/middleware/security';
 
 export function middleware(request: NextRequest) {
   const response = NextResponse.next();
+  const requestId = request.headers.get('x-request-id') || crypto.randomUUID();
 
   // Add security headers
   Object.entries(securityHeaders).forEach(([key, value]) => {
     response.headers.set(key, value);
   });
+  response.headers.set('x-request-id', requestId);
 
   // Generate CSRF token for each request if not present
   if (!request.cookies.has('csrf-token')) {
