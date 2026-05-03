@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import {
   Box,
   Button,
@@ -13,25 +13,22 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Tab,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Tab,
   Tabs,
   Typography,
 } from "@mui/material";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-
-interface BatchResult {
-  testCaseName: string;
-  output: string;
-  expectedOutput: string | null;
-  passed: boolean | null;
-  executionTime: number | null;
-}
+import { useEffect, useState } from "react";
+import type {
+  BatchRunRequest,
+  BatchRunResult,
+  TestProvider,
+} from "@/lib/contracts/testCases";
 
 interface BatchRunDialogProps {
   open: boolean;
@@ -40,15 +37,20 @@ interface BatchRunDialogProps {
   onComplete: () => void;
 }
 
-export default function BatchRunDialog({ open, onClose, promptId, onComplete }: BatchRunDialogProps) {
+export default function BatchRunDialog({
+  open,
+  onClose,
+  promptId,
+  onComplete,
+}: BatchRunDialogProps) {
   const [providerTab, setProviderTab] = useState(0);
   const [ollamaModels, setOllamaModels] = useState<string[]>([]);
   const [selectedModel, setSelectedModel] = useState("");
   const [running, setRunning] = useState(false);
-  const [results, setResults] = useState<BatchResult[]>([]);
+  const [results, setResults] = useState<BatchRunResult[]>([]);
 
   const providers = ["ollama", "openai", "anthropic"];
-  const provider = providers[providerTab];
+  const provider = providers[providerTab] as TestProvider;
 
   useEffect(() => {
     if (open && providerTab === 0) {
@@ -61,21 +63,26 @@ export default function BatchRunDialog({ open, onClose, promptId, onComplete }: 
         })
         .catch(() => {});
     }
-  }, [open, providerTab]);
+  }, [open, providerTab, selectedModel]);
 
   useEffect(() => {
     if (providerTab === 1) setSelectedModel("gpt-4o-mini");
-    else if (providerTab === 2) setSelectedModel("claude-3-5-haiku-20241022");
+    else if (providerTab === 2) setSelectedModel("claude-haiku-4-5");
   }, [providerTab]);
 
   const handleRun = async () => {
     setRunning(true);
     setResults([]);
     try {
+      const payload: BatchRunRequest = {
+        promptId,
+        provider,
+        modelName: selectedModel,
+      };
       const res = await fetch("/api/test-cases/batch-run", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ promptId, model: selectedModel, provider }),
+        body: JSON.stringify(payload),
       });
       if (res.ok) {
         const data = await res.json();
@@ -92,17 +99,22 @@ export default function BatchRunDialog({ open, onClose, promptId, onComplete }: 
   const modelOptions = () => {
     if (providerTab === 0) return ollamaModels;
     if (providerTab === 1) return ["gpt-4o", "gpt-4o-mini", "o1", "o3-mini"];
-    return ["claude-sonnet-4-20250514", "claude-3-5-haiku-20241022", "claude-3-5-sonnet-20241022", "claude-3-opus-20240229"];
+    return ["claude-opus-4-7", "claude-sonnet-4-6", "claude-haiku-4-5"];
   };
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <DialogTitle>Batch Run Test Cases</DialogTitle>
       <DialogContent>
-        <Tabs value={providerTab} onChange={(_e, v) => setProviderTab(v)} sx={{ mb: 2 }}>
-          <Tab label="Ollama" />
-          <Tab label="OpenAI" />
-          <Tab label="Anthropic" />
+        <Tabs
+          value={providerTab}
+          onChange={(_e, v) => setProviderTab(v)}
+          aria-label="Batch Run Providers"
+          sx={{ mb: 2 }}
+        >
+          <Tab label="Ollama" data-testid="batch-run-tab-ollama" />
+          <Tab label="OpenAI" data-testid="batch-run-tab-openai" />
+          <Tab label="Anthropic" data-testid="batch-run-tab-anthropic" />
         </Tabs>
 
         <Box sx={{ display: "flex", gap: 2, mb: 3, alignItems: "center" }}>
@@ -114,13 +126,22 @@ export default function BatchRunDialog({ open, onClose, promptId, onComplete }: 
               onChange={(e) => setSelectedModel(e.target.value)}
             >
               {modelOptions().map((m) => (
-                <MenuItem key={m} value={m}>{m}</MenuItem>
+                <MenuItem key={m} value={m}>
+                  {m}
+                </MenuItem>
               ))}
             </Select>
           </FormControl>
           <Button
+            data-testid="batch-run-run-all-button"
             variant="contained"
-            startIcon={running ? <CircularProgress size={16} color="inherit" /> : <PlayArrowIcon />}
+            startIcon={
+              running ? (
+                <CircularProgress size={16} color="inherit" />
+              ) : (
+                <PlayArrowIcon />
+              )
+            }
             onClick={handleRun}
             disabled={running || !selectedModel}
           >
@@ -145,12 +166,30 @@ export default function BatchRunDialog({ open, onClose, promptId, onComplete }: 
                   <TableRow key={i}>
                     <TableCell>{r.testCaseName}</TableCell>
                     <TableCell>
-                      <Typography variant="caption" sx={{ maxWidth: 200, display: "block", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          maxWidth: 200,
+                          display: "block",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
                         {r.output}
                       </Typography>
                     </TableCell>
                     <TableCell>
-                      <Typography variant="caption" sx={{ maxWidth: 150, display: "block", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          maxWidth: 150,
+                          display: "block",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
                         {r.expectedOutput || "—"}
                       </Typography>
                     </TableCell>
@@ -164,7 +203,9 @@ export default function BatchRunDialog({ open, onClose, promptId, onComplete }: 
                       )}
                     </TableCell>
                     <TableCell>
-                      {r.executionTime != null ? `${r.executionTime.toFixed(1)}s` : "—"}
+                      {r.executionTime != null
+                        ? `${r.executionTime.toFixed(1)}s`
+                        : "—"}
                     </TableCell>
                   </TableRow>
                 ))}
