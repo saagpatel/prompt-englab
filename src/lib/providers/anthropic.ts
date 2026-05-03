@@ -2,10 +2,9 @@ import Anthropic from "@anthropic-ai/sdk";
 
 // Cost per 1M tokens (input/output) — approximate as of 2025
 const COST_TABLE: Record<string, { input: number; output: number }> = {
-  "claude-sonnet-4-20250514": { input: 3, output: 15 },
-  "claude-3-5-haiku-20241022": { input: 0.8, output: 4 },
-  "claude-3-5-sonnet-20241022": { input: 3, output: 15 },
-  "claude-3-opus-20240229": { input: 15, output: 75 },
+  "claude-opus-4-7": { input: 5, output: 25 },
+  "claude-sonnet-4-6": { input: 3, output: 15 },
+  "claude-haiku-4-5": { input: 1, output: 5 },
 };
 
 export async function generateAnthropic(params: {
@@ -45,7 +44,13 @@ export async function* generateAnthropicStream(params: {
   model: string;
   content: string;
   systemPrompt?: string;
-}): AsyncGenerator<{ token?: string; done?: boolean; inputTokens?: number; outputTokens?: number; costEstimate?: number }> {
+}): AsyncGenerator<{
+  token?: string;
+  done?: boolean;
+  inputTokens?: number;
+  outputTokens?: number;
+  costEstimate?: number;
+}> {
   const client = new Anthropic({ apiKey: params.apiKey });
 
   const stream = client.messages.stream({
@@ -56,7 +61,10 @@ export async function* generateAnthropicStream(params: {
   });
 
   for await (const event of stream) {
-    if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
+    if (
+      event.type === "content_block_delta" &&
+      event.delta.type === "text_delta"
+    ) {
       yield { token: event.delta.text };
     }
   }

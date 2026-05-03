@@ -1,17 +1,12 @@
-import { NextRequest, NextResponse } from "next/server";
-import { withRateLimit } from "@/lib/middleware/rateLimit";
+import { type NextRequest, NextResponse } from "next/server";
 import { handleApiError } from "@/lib/middleware/errorHandler";
+import { withRateLimit } from "@/lib/middleware/rateLimit";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getHandler = async (_request: NextRequest) => {
   try {
     return NextResponse.json({
-      models: [
-        "claude-sonnet-4-20250514",
-        "claude-3-5-haiku-20241022",
-        "claude-3-5-sonnet-20241022",
-        "claude-3-opus-20240229",
-      ],
+      models: ["claude-opus-4-7", "claude-sonnet-4-6", "claude-haiku-4-5"],
     });
   } catch (error) {
     return handleApiError(error);
@@ -20,5 +15,5 @@ const getHandler = async (_request: NextRequest) => {
 
 export const GET = withRateLimit(
   { windowMs: 60000, maxRequests: 100 },
-  getHandler
+  getHandler,
 );
