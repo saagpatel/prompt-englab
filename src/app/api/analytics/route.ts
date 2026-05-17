@@ -3,6 +3,26 @@ import { prisma } from "@/lib/prisma";
 import { withRateLimit } from "@/lib/middleware/rateLimit";
 import { handleApiError } from "@/lib/middleware/errorHandler";
 
+type CostByModelRow = {
+  modelName: string;
+  _sum: { costEstimate: number | null };
+};
+
+type PromptCategoryRow = {
+  category: string | null;
+  _count: { id: number };
+};
+
+type ResponseModelRow = {
+  modelName: string;
+  _count: { id: number };
+};
+
+type RatingByModelRow = {
+  modelName: string;
+  _avg: { rating: number | null };
+};
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getHandler = async (_request: NextRequest) => {
   try {
@@ -64,19 +84,19 @@ const getHandler = async (_request: NextRequest) => {
       versions: totalVersions,
     },
     totalCost: totalCostAgg._sum.costEstimate || 0,
-    costByModel: costByModelAgg.map((r) => ({
+    costByModel: costByModelAgg.map((r: CostByModelRow) => ({
       model: r.modelName,
       cost: Number((r._sum.costEstimate || 0).toFixed(4)),
     })),
-    promptsByCategory: promptsByCategory.map((c) => ({
+    promptsByCategory: promptsByCategory.map((c: PromptCategoryRow) => ({
       category: c.category || "Uncategorized",
       count: c._count.id,
     })),
-    responsesByModel: responsesByModel.map((r) => ({
+    responsesByModel: responsesByModel.map((r: ResponseModelRow) => ({
       model: r.modelName,
       count: r._count.id,
     })),
-    avgRatingByModel: avgRatingByModel.map((r) => ({
+    avgRatingByModel: avgRatingByModel.map((r: RatingByModelRow) => ({
       model: r.modelName,
       avgRating: Number((r._avg.rating || 0).toFixed(2)),
     })),
