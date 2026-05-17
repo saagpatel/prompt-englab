@@ -7,6 +7,14 @@ import { withCsrfProtection } from "@/lib/middleware/csrf";
 import { withValidation } from "@/lib/middleware/validation";
 import { handleApiError } from "@/lib/middleware/errorHandler";
 
+type ApiKeyRow = {
+  id: string;
+  provider: string;
+  label: string;
+  encryptedKey: string;
+  createdAt: Date;
+};
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getHandler = async (_request: NextRequest) => {
   try {
@@ -15,7 +23,7 @@ const getHandler = async (_request: NextRequest) => {
     });
 
     // Mask the keys for display
-    const masked = keys.map((k) => ({
+    const masked = keys.map((k: ApiKeyRow) => ({
       id: k.id,
       provider: k.provider,
       label: k.label,
