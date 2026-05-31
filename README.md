@@ -45,11 +45,20 @@ npm run dev
 npm run build && npm start
 ```
 
+### Docker
+
+A production Dockerfile is included. It builds the Next.js app, stores SQLite data at `/app/data/prod.db`, and runs on port 3000.
+
+```bash
+docker build -t prompt-englab .
+docker run -p 3000:3000 -e ENCRYPTION_SECRET=<32-byte-hex> -v /your/data:/app/data prompt-englab
+```
+
 ## Tech Stack
 
 | Layer | Technology |
 |-------|------------|
-| Framework | Next.js (App Router, Turbopack) |
+| Framework | Next.js (App Router) |
 | UI | Material UI 7, Emotion |
 | Editor | Monaco Editor |
 | Database | SQLite via Prisma + LibSQL adapter |

@@ -7,7 +7,7 @@ Prompt Lab is a local full-stack prompt engineering workbench for developing, te
 
 ## Current State
 
-The repo is active local web-app work. Existing untracked `.perf-results` and `docs/` folders are local/generated or parallel-session artifacts, so this recovery pass should only add the context file.
+v1.0.0 shipped 2026-03-22. All core features are implemented: multi-provider streaming (Ollama/OpenAI/Anthropic via SSE), prompt versioning with word-level diffs, template variables, named test cases with batch runner, A/B response comparison, cost dashboard, and OCR import. API keys are encrypted at rest with AES-256-GCM. GitHub Actions CI runs typecheck, lint, unit tests, and build on every push. A production Dockerfile is included. The `[Unreleased]` section of CHANGELOG is empty.
 
 ## Stack
 
@@ -39,6 +39,6 @@ The repo is active local web-app work. Existing untracked `.perf-results` and `d
 
 ## Next Recommended Move
 
-Add only the context file for this recovery pass, then continue with provider streaming, prompt versioning, test-case, and encrypted-key behavior behind normal app verification.
+All v1.0.0 features are shipped. The `[Unreleased]` section of CHANGELOG is empty — no planned next work is documented. Expand feature scope (additional providers, prompt sharing, team workspaces) or harden the existing surface (integration tests, rate-limit tuning, performance profiling).
 
 <!-- portfolio-context:end -->
