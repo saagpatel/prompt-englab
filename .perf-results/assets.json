@@ -1,0 +1,8 @@
+{
+  "status": "pass",
+  "checkedFiles": 30,
+  "maxBytes": 450000,
+  "roots": ["public", ".next/static"],
+  "largestFile": ".next/static/chunks/0bl1viwpmm97k.js",
+  "largestBytes":   400667
+}

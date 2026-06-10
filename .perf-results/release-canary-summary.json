@@ -1,0 +1,9 @@
+{
+  "capturedAt": "2026-03-24T10:47:19Z",
+  "baseUrl": "http://localhost:3000",
+  "checks": 6,
+  "failures": 0,
+  "latencyBreaches": 0,
+  "maxFailures": 0,
+  "maxLatencyMs": 0
+}

@@ -1,0 +1,40 @@
+{
+  "source": "next",
+  "totalBytes": 2223367,
+  "pages": {
+    "/_app": 0
+  },
+  "assets": {
+    "static/NYVZFh3zhjLrtAKw5r3od/_buildManifest.js": 219,
+    "static/NYVZFh3zhjLrtAKw5r3od/_clientMiddlewareManifest.js": 317,
+    "static/NYVZFh3zhjLrtAKw5r3od/_ssgManifest.js": 80,
+    "static/chunks/0.0n.x_e8ju80.js": 245939,
+    "static/chunks/0.p44hsb6q1sa.js": 89029,
+    "static/chunks/02i7dfk78~t~2.js": 53149,
+    "static/chunks/03zqe70be6jhd.js": 73762,
+    "static/chunks/03~yq9q893hmn.js": 112594,
+    "static/chunks/06-7ty.8-y7yv.js": 34852,
+    "static/chunks/07u.qjt~6kotc.js": 245939,
+    "static/chunks/08p8fkvfbgf79.js": 60600,
+    "static/chunks/08p~g3vm~h-a8.css": 25,
+    "static/chunks/08zok6.5_1m~9.js": 57909,
+    "static/chunks/08~pvhfxkn~e1.js": 21063,
+    "static/chunks/0bl1viwpmm97k.js": 400667,
+    "static/chunks/0cjv5vc2ko89q.js": 14489,
+    "static/chunks/0cu-zu9d-6yl7.js": 25167,
+    "static/chunks/0i75gy4iyciua.js": 60600,
+    "static/chunks/0jlv.e7b1xhrb.js": 9972,
+    "static/chunks/0krbbpnldbdjt.js": 60600,
+    "static/chunks/0lnm5v1ctj9y4.js": 27407,
+    "static/chunks/0m8i3x1yq3o.0.js": 35766,
+    "static/chunks/0o-cdg~qrr90y.js": 143497,
+    "static/chunks/0o0fp8e~-ehfc.js": 227537,
+    "static/chunks/0p46nam-uk0~m.js": 66868,
+    "static/chunks/0q6trvaie7gec.js": 37314,
+    "static/chunks/0~v.e3d_6jang.js": 17277,
+    "static/chunks/106v3s75xn18_.js": 29549,
+    "static/chunks/1549~_l3h3dmy.js": 60600,
+    "static/chunks/turbopack-06n_ku.hip7gd.js": 10580
+  },
+  "capturedAt": "2026-04-12T12:27:11.177Z"
+}
