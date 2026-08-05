@@ -28,7 +28,7 @@
     "date-fns": "^4.1.0",
     "next": "^16.2.11",
     "openai": "^6.45.0",
-    "prisma": "^7.3.0",
+    "prisma": "^7.9.1",
     "react": "19.2.3",
     "react-diff-viewer-continued": "^4.2.2",
     "react-dom": "19.2.3",
