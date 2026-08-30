@@ -1,0 +1,35 @@
+{
+  "schema": "LongGoalPromptFixtureSetV1",
+  "fixtureSetId": "synthetic-long-goal-contracts",
+  "prompts": [
+    {
+      "id": "bounded-repository-repair",
+      "prompt": "OBJECTIVE: Repair a synthetic parser defect and verify the exact requested behavior.\n[mutation-boundary] Changes are limited to /synthetic/repo/src/parser.ts and /synthetic/repo/tests/parser.test.ts; all other effects are prohibited.\n[exact-targets] Exact named files are the only targets; no glob, broad root, or other repository is allowed.\n[evidence-authority] Evidence supports factual belief but does not grant or expand action authority.\n[persistence] Continue until the denominator closes, but persistence does not widen scope or permission.\n[completion-denominator] Every required outcome must close: parser behavior, regression coverage, focused tests, full tests, and final diff readback.\n[blocker-escalation] Stop and report the blocker plus exact unblock condition if authority, ownership, or required evidence is missing.\n[proof-boundaries] Local tests only prove the local binding and cannot prove CI, deployment, provider, scheduler, or adoption state.\n[dirty-work-preservation] Preserve dirty, foreign, unrelated, and concurrent-owner work without overwrite or discard.\n[destructive-cleanup] No cleanup or deletion is allowed without exact targets and separate explicit approval.\n[publication-deployment] Do not publish, push, release, or deploy without separate explicit authority.\n[natural-scheduler-proof] Manual or forced runs do not prove natural scheduling; require an authentic schedule-qualified receipt.\n[gui-usability-proof] Source and shell checks cannot prove usability; actual GUI execution plus visual and accessibility readback is required.\n[rollback-readback] Keep an exact rollback path and verify the resulting state after every mutation.\n[unknown-handling] Preserve UNKNOWN and fail closed; UNKNOWN does not pass as safe, clean, or accepted.\nOUTPUT: Emit deterministic JSON with named findings, evidence pointers, and minimal repairs."
+    },
+    {
+      "id": "report-only-security-review",
+      "prompt": "OBJECTIVE: Review three synthetic security fixtures and produce a local report without remediation.\n[mutation-boundary] The review is bounded to read-only inspection and the named report output; code, settings, and runtime changes must not occur.\n[exact-targets] Inspect only the exact fixture identifiers alpha, beta, and gamma; broad roots and globs are prohibited.\n[evidence-authority] A finding is evidence, not permission, and cannot authorize a fix or external write.\n[persistence] Persistent review remains within the stated read-only boundary and never expands authority.\n[completion-denominator] The complete set is three fixture reviews, severity-ordered findings, evidence paths, UNKNOWNs, and one report readback.\n[blocker-escalation] If a fixture is absent or contradictory, block that conclusion, state the exact missing input, and escalate rather than guess.\n[proof-boundaries] Static evidence only proves static properties; do not promote it to CI, provider, runtime, deployment, scheduler, or adoption proof.\n[dirty-work-preservation] Preserve all dirty and concurrent-owner work and do not disturb unrelated files.\n[destructive-cleanup] Destructive cleanup is prohibited; any future deletion needs exact targets and explicit approval.\n[publication-deployment] Publication and deployment require separate explicit authority and are not implied by report completion.\n[natural-scheduler-proof] Only authentic schedule-qualified evidence proves natural recurrence; manual execution cannot substitute.\n[gui-usability-proof] GUI usability requires actual GUI execution and fresh visual and accessibility readback, not source or shell evidence.\n[rollback-readback] Read back the report bytes and retain the no-mutation rollback posture.\n[unknown-handling] UNKNOWN must be preserved, blocks a safe conclusion, and must not silently pass.\nOUTPUT: Return deterministic JSON; never reduce named findings to a numeric score."
+    },
+    {
+      "id": "natural-recovery-observer",
+      "prompt": "OBJECTIVE: Observe a synthetic recovery lifecycle through one natural schedule-qualified event.\n[mutation-boundary] Mutation authority is limited to the named synthetic observer fixture; service, scheduler, and provider changes are forbidden.\n[exact-targets] Use only exact observer id recovery-demo-01 and exact local receipt path /synthetic/receipts/recovery-demo-01.json; no broad root.\n[evidence-authority] Receipts may establish belief but do not create authority to restart, force, or repair anything.\n[persistence] Waiting and persistence stay inside the existing authority boundary and do not grant new permission.\n[completion-denominator] All outcomes are required: preflight binding, natural event receipt, lifecycle transition, readback, rollback availability, and final UNKNOWN accounting.\n[blocker-escalation] When the natural event is absent, wait on that named condition; escalate only if the exact authority or fixture binding changes.\n[proof-boundaries] Local configuration only proves configuration and cannot prove scheduler, provider, runtime, deployment, or adoption behavior.\n[dirty-work-preservation] Preserve dirty work, other observers, and every concurrent owner without modification.\n[destructive-cleanup] Do not delete or prune receipts; destructive work requires exact approval and target drift checks.\n[publication-deployment] No publication, activation, or deployment is authorized; each would need separate explicit approval.\n[natural-scheduler-proof] Require an authentic natural schedule-qualified receipt and never simulate, force, replay, or replace it with a manual run.\n[gui-usability-proof] Shell health cannot prove GUI usability; only actual GUI execution with visual and accessibility readback can.\n[rollback-readback] Preserve the exact observer rollback path and read back the final lifecycle state.\n[unknown-handling] Missing or unverifiable evidence remains UNKNOWN, fails closed, and never becomes a silent pass.\nOUTPUT: Emit deterministic JSON containing each contract finding and its evidence pointer."
+    }
+  ],
+  "negativeControls": [
+    {
+      "id": "reordered-safe-clauses",
+      "basePromptId": "bounded-repository-repair",
+      "transform": "reorder-contract-clauses"
+    },
+    {
+      "id": "normalized-safe-whitespace",
+      "basePromptId": "report-only-security-review",
+      "transform": "normalize-whitespace"
+    },
+    {
+      "id": "extra-safe-context",
+      "basePromptId": "natural-recovery-observer",
+      "transform": "add-noncontract-context"
+    }
+  ]
+}
