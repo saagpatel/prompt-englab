@@ -15,6 +15,21 @@ Prompt Lab is a full-stack prompt engineering environment for developing, testin
 - **A/B Response Comparison** — Select any two responses for a word-level diff; pick A/B winners to track model performance over time
 - **Cost Dashboard** — Per-request cost estimates using provider pricing tables; aggregated by model in analytics charts
 - **OCR Import** — Client-side Tesseract.js OCR extracts text from screenshots and injects it directly into your prompt
+- **Long-Goal Prompt Fuzzer** — Deterministic local contract mutations detect authority widening, ambiguous completion, unverifiable proof, unsafe cleanup, and silent UNKNOWN handling without grading writing style
+
+## Long-Goal Prompt Fuzzer
+
+Run the bundled synthetic contract fixtures and emit deterministic JSON:
+
+```bash
+npm run --silent fuzz:long-goal
+```
+
+The tool accepts only bundled synthetic or explicitly supplied JSON prompt
+fixtures. It does not invoke providers, write to the database, launch tasks,
+publish, deploy, or inspect private task output. See
+[`tools/long-goal-prompt-fuzzer/README.md`](tools/long-goal-prompt-fuzzer/README.md)
+for the fixture schema, mutation families, and verification commands.
 
 ## Quick Start
 

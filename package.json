@@ -12,6 +12,9 @@
     "start": "next start",
     "lint": "eslint",
     "test": "jest",
+    "test:fuzzer": "jest --runInBand tools/long-goal-prompt-fuzzer/__tests__",
+    "test:fuzzer:nonblind": "jest --runInBand tools/long-goal-prompt-fuzzer/__tests__/fuzzer.test.js",
+    "fuzz:long-goal": "node tools/long-goal-prompt-fuzzer/cli.cjs",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
   },
