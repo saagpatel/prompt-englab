@@ -112,7 +112,7 @@ capability evidence. Pure documentation changes do not require browser runs.
 | Layer | Technology |
 |-------|------------|
 | Framework | Next.js (App Router) |
-| UI | Material UI 7, Emotion |
+| UI | Material UI 9, Emotion |
 | Editor | Monaco Editor |
 | Database | SQLite via Prisma + LibSQL adapter |
 | LLM providers | OpenAI SDK, Anthropic SDK, Ollama REST |

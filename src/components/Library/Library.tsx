@@ -271,7 +271,7 @@ export default function Library() {
               <CardActionArea onClick={() => router.push(`/prompts/${prompt.id}`)} sx={{ height: "100%" }}>
                 <CardContent>
                   <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 1 }}>
-                    <Typography variant="subtitle1" fontWeight={600} noWrap sx={{ flex: 1, mr: 1 }}>
+                    <Typography variant="subtitle1" noWrap sx={{ fontWeight: 600, flex: 1, mr: 1 }}>
                       {prompt.title}
                     </Typography>
                     {prompt.isFavorite && <FavoriteIcon color="error" sx={{ fontSize: 16 }} />}
