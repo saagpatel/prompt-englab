@@ -35,7 +35,7 @@ for the fixture schema, mutation families, and verification commands.
 
 ### Prerequisites
 
-- Node.js 20+
+- Node.js 20.19+ or 22.12+
 - npm
 - [Ollama](https://ollama.ai) (optional — enables local model runs without API keys)
 
@@ -44,7 +44,8 @@ for the fixture schema, mutation families, and verification commands.
 ```bash
 git clone https://github.com/saagpatel/prompt-englab.git
 cd prompt-englab
-npm install
+npm ci
+# Configure the isolated environment described below before migrating.
 npx prisma migrate dev
 ```
 
@@ -68,6 +69,43 @@ A production Dockerfile is included. It builds the Next.js app, stores SQLite da
 docker build -t prompt-englab .
 docker run -p 3000:3000 -e ENCRYPTION_SECRET=<32-byte-hex> -v /your/data:/app/data prompt-englab
 ```
+
+## Verification and isolated development
+
+Run from the repository root with Node.js 20.19+ or 22.12+ and the npm lockfile
+(the locked Prisma engine is stricter than the Next.js minimum):
+
+```bash
+npm ci
+npm run prisma:generate             # local generated client; no migration
+npm run typecheck
+npm run lint -- --max-warnings 30    # same warning allowance as CI
+npm test -- --runInBand src/lib/__tests__/templateUtils.test.ts
+npm test -- --runInBand --coverage   # broader CI unit/coverage lane
+npm run build                       # also generates Prisma client via prebuild
+```
+
+For encryption tests, supply a 64-hex-character **synthetic test-only**
+`ENCRYPTION_SECRET`, as `.github/workflows/verify.yml` does. Do not reuse
+production secrets or provider keys. Jest tests and the
+[contract fuzzer](tools/long-goal-prompt-fuzzer/README.md) run local fixtures;
+provider calls are separate capability checks, not prerequisites for these gates.
+No standalone formatter script is configured.
+
+For a new disposable checkout, set `DATABASE_URL=file:../dev.db` for Prisma
+migrations and generate a private 32-byte hex `ENCRYPTION_SECRET` in an ignored
+local environment file before `npx prisma migrate dev` / `npm run dev`.
+Migrations mutate that database. The current application adapter in
+`src/lib/prisma.ts` opens **dev.db in the working directory**, regardless of
+`DATABASE_URL`, so isolate the entire checkout for interactive tests and never
+point migration tooling at an existing personal database. Changing the encryption
+secret makes previously encrypted keys unreadable. Provider keys are optional;
+do not invoke cloud providers or start Ollama simply to verify documentation.
+
+For changed UI, streaming or analytics behavior, exercise affected flows at
+`http://localhost:3000` with synthetic prompts and fixture/mocked responses in
+that disposable checkout. Provider-backed runs require separately authorized
+capability evidence. Pure documentation changes do not require browser runs.
 
 ## Tech Stack
 
