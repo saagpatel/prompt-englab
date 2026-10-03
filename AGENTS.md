@@ -7,7 +7,7 @@ Prompt Lab is a local full-stack prompt engineering workbench for developing, te
 
 ## Current State
 
-v1.0.0 shipped 2026-03-22. All core features are implemented: multi-provider streaming (Ollama/OpenAI/Anthropic via SSE), prompt versioning with word-level diffs, template variables, named test cases with batch runner, A/B response comparison, cost dashboard, and OCR import. API keys are encrypted at rest with AES-256-GCM. GitHub Actions CI runs typecheck, lint, unit tests, and build on every push. A production Dockerfile is included. The `[Unreleased]` section of CHANGELOG is empty.
+v1.0.0 shipped 2026-03-22. All core features are implemented: multi-provider streaming (Ollama/OpenAI/Anthropic via SSE), prompt versioning with word-level diffs, template variables, named test cases with batch runner, A/B response comparison, cost dashboard, and OCR import. API keys are encrypted at rest with AES-256-GCM. GitHub Actions CI runs typecheck, lint, unit tests, and build on pushes to `main`, `develop`, and `claude/**`, and pull requests targeting `main` or `develop`. A production Dockerfile is included. The `[Unreleased]` section of CHANGELOG is empty.
 
 ## Stack
 
