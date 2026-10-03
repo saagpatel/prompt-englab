@@ -46,7 +46,7 @@ function StatCard({ label, value }: { label: string; value: string | number }) {
   return (
     <Card>
       <CardContent sx={{ textAlign: "center", py: 2 }}>
-        <Typography variant="h3" fontWeight={700} color="primary">
+        <Typography variant="h3" color="primary" sx={{ fontWeight: 700 }}>
           {value}
         </Typography>
         <Typography variant="body2" color="text.secondary">
@@ -135,7 +135,7 @@ export default function AnalyticsDashboard() {
           <Grid size={{ xs: 12 }}>
             <Card>
               <CardContent>
-                <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 2 }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
                   Prompts Over Time
                 </Typography>
                 <ResponsiveContainer width="100%" height={250}>
@@ -159,7 +159,7 @@ export default function AnalyticsDashboard() {
           <Grid size={{ xs: 12, md: 6 }}>
             <Card>
               <CardContent>
-                <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 2 }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
                   Responses by Model
                 </Typography>
                 <ResponsiveContainer width="100%" height={250}>
@@ -183,7 +183,7 @@ export default function AnalyticsDashboard() {
           <Grid size={{ xs: 12, md: 6 }}>
             <Card>
               <CardContent>
-                <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 2 }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
                   Average Rating by Model
                 </Typography>
                 <ResponsiveContainer width="100%" height={250}>
@@ -207,7 +207,7 @@ export default function AnalyticsDashboard() {
           <Grid size={{ xs: 12, md: 6 }}>
             <Card>
               <CardContent>
-                <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 2 }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
                   Cost by Model
                 </Typography>
                 <ResponsiveContainer width="100%" height={250}>
@@ -232,7 +232,7 @@ export default function AnalyticsDashboard() {
           <Grid size={{ xs: 12, md: 6 }}>
             <Card>
               <CardContent>
-                <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 2 }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
                   Category Breakdown
                 </Typography>
                 <ResponsiveContainer width="100%" height={250}>

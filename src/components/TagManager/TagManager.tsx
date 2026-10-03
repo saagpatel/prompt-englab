@@ -25,13 +25,13 @@ export default function TagManager({ tags, onChange }: TagManagerProps) {
       options={allTags}
       value={tags}
       onChange={(_e, newValue) => onChange(newValue as string[])}
-      renderTags={(value, getTagProps) =>
+      renderValue={(value, getItemProps) =>
         value.map((option, index) => (
           <Chip
             variant="outlined"
             label={option}
             size="small"
-            {...getTagProps({ index })}
+            {...getItemProps({ index })}
             key={option}
           />
         ))
