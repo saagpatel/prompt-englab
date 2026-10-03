@@ -14,7 +14,7 @@ v1.0.0 shipped 2026-03-22. All core features are implemented: multi-provider str
 | Layer | Technology |
 |-------|------------|
 | Framework | Next.js (App Router, Turbopack) |
-| UI | Material UI 7, Emotion |
+| UI | Material UI 9, Emotion |
 | Editor | Monaco Editor |
 | Database | SQLite via Prisma + LibSQL adapter |
 | LLM providers | OpenAI SDK, Anthropic SDK, Ollama REST |
