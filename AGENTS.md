@@ -25,8 +25,9 @@ v1.0.0 shipped 2026-03-22. All core features are implemented: multi-provider str
 
 ## How To Run
 
-- Install dependencies with `npm install`.
-- Run database migrations with `npx prisma migrate dev`.
+- Follow [README verification and isolated development](README.md#verification-and-isolated-development) for prerequisites, local gates and safe database setup.
+- Install locked dependencies with `npm ci`.
+- Run `npx prisma migrate dev` only after configuring a disposable checkout/database as described in the README.
 - Start local development with `npm run dev`.
 - Build and run production mode with `npm run build && npm start`.
 
