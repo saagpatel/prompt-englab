@@ -35,7 +35,7 @@ for the fixture schema, mutation families, and verification commands.
 
 ### Prerequisites
 
-- Node.js 20 (20.19+), 22 (22.12+), or 24+
+- Node.js 22 (22.12+) or 24+
 - npm
 - [Ollama](https://ollama.ai) (optional — enables local model runs without API keys)
 
@@ -72,8 +72,8 @@ docker run -p 3000:3000 -e ENCRYPTION_SECRET=<32-byte-hex> -v /your/data:/app/da
 
 ## Verification and isolated development
 
-Run from the repository root with Node.js 20 (20.19+), 22 (22.12+), or 24+ and the npm lockfile
-(the locked Prisma engine is stricter than the Next.js minimum):
+Run from the repository root with Node.js 22 (22.12+) or 24+ and the npm lockfile
+(the locked OpenAI SDK requires Node.js 22+, and Prisma requires 22.12+ on Node.js 22):
 
 ```bash
 npm ci
