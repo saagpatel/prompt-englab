@@ -9,7 +9,7 @@ Prompt Lab is a full-stack prompt engineering environment for developing, testin
 ## Features
 
 - **Multi-Provider Streaming** — Run prompts against Ollama (local), OpenAI, or Anthropic with real-time SSE token streaming; switch providers with a tab click
-- **Version Control** — Every save creates a versioned snapshot with change notes; compare any two versions with a visual word-level diff and restore with one click
+- **Version Control** — Creating a prompt or saving changed content or system prompts creates a versioned snapshot with change notes; compare any two versions with a visual word-level diff and load a selected version into the editor
 - **Template Variables** — `{{variable}}` syntax is auto-detected and filled via dialog before execution; define reusable values via test cases
 - **Test Case Runner** — Named test cases with expected outputs; run individually or batch-run all cases across any model; pass/fail tracked per run
 - **A/B Response Comparison** — Select any two responses for a word-level diff; pick A/B winners to track model performance over time
@@ -35,7 +35,7 @@ for the fixture schema, mutation families, and verification commands.
 
 ### Prerequisites
 
-- Node.js 20.19+ or 22.12+
+- Node.js 22 (22.12+) or 24+
 - npm
 - [Ollama](https://ollama.ai) (optional — enables local model runs without API keys)
 
@@ -63,7 +63,7 @@ npm run build && npm start
 
 ### Docker
 
-A production Dockerfile is included. It builds the Next.js app, stores SQLite data at `/app/data/prod.db`, and runs on port 3000.
+A production Dockerfile is included. It builds the Next.js app and runs on port 3000. It sets `DATABASE_URL=file:./data/prod.db`, but the application adapter opens `/app/dev.db`; the `/app/data` volume below does not persist the application's database.
 
 ```bash
 docker build -t prompt-englab .
@@ -72,8 +72,8 @@ docker run -p 3000:3000 -e ENCRYPTION_SECRET=<32-byte-hex> -v /your/data:/app/da
 
 ## Verification and isolated development
 
-Run from the repository root with Node.js 20.19+ or 22.12+ and the npm lockfile
-(the locked Prisma engine is stricter than the Next.js minimum):
+Run from the repository root with Node.js 22 (22.12+) or 24+ and the npm lockfile
+(the locked OpenAI SDK requires Node.js 22+, and Prisma requires 22.12+ on Node.js 22):
 
 ```bash
 npm ci
@@ -123,7 +123,7 @@ capability evidence. Pure documentation changes do not require browser runs.
 
 ## Architecture
 
-Prompt Lab is a Next.js App Router application. API routes handle LLM provider calls and stream tokens back to the client via SSE. All prompts, versions, responses, and test results are stored in a local SQLite database via Prisma with the LibSQL adapter — no Docker or external services required. Provider API keys are encrypted with AES-256-GCM before being written to the database. The Monaco editor is loaded client-side and wired to debounced auto-save.
+Prompt Lab is a Next.js App Router application. API routes handle LLM provider calls and stream tokens back to the client via SSE. All prompts, versions, responses, and test results are stored in a local SQLite database via Prisma with the LibSQL adapter — no Docker or external services required. Provider API keys are encrypted with AES-256-GCM before being written to the database. The Monaco editor is loaded client-side; prompts are saved explicitly via the Save button or keyboard shortcut.
 
 ## License
 
