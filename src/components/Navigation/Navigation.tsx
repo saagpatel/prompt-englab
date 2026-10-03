@@ -16,7 +16,7 @@ import {
   IconButton,
 } from "@mui/material";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
-import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -27,7 +27,7 @@ const DRAWER_WIDTH = 240;
 
 const navItems = [
   { label: "Library", path: "/prompts", icon: <LibraryBooksIcon /> },
-  { label: "New Prompt", path: "/prompts/new", icon: <AddCircleOutlinedIcon /> },
+  { label: "New Prompt", path: "/prompts/new", icon: <AddCircleOutlineOutlinedIcon /> },
   { label: "Compare", path: "/compare", icon: <CompareArrowsIcon /> },
   { label: "Analytics", path: "/analytics", icon: <BarChartIcon /> },
   { label: "Settings", path: "/settings", icon: <SettingsIcon /> },
